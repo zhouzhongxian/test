@@ -1,0 +1,63 @@
+package test;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class StringTest {
+
+	/**
+	 * @param args
+	 * @throws IOException 
+	 */
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		File file = new File("F:\\test.txt");
+		FileInputStream fin = new FileInputStream(file);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
+        String str = "";
+        String result = "";
+        while((str = bufferedReader.readLine()) != null){
+        	result += str;
+        }
+        System.out.println("result = " + result);
+        String[] arr = result.split(" ");
+        Set<String> set = new HashSet<String>();
+        for(int i=0;i<arr.length;i++){
+        	set.add(arr[i]);
+        }
+        String strs = "";
+        for (Object object : set) {
+			strs = (String)object;
+			int num = 0;
+			for(int i=0;i<arr.length;i++){
+				if(strs.equals(arr[i])){
+					num ++;
+				}
+			}
+			strs = checkString(strs);
+			if(!"".equals(strs)){
+				System.out.println("单词:" + strs + " num=" + num);
+			}
+		}
+	}
+	public static String checkString(String strs){
+		if(strs.startsWith(",") || strs.startsWith(".") || strs.startsWith("-") || strs.startsWith("\"")){
+			strs = strs.substring(1,strs.length());
+			checkString(strs);
+		}else if (strs.endsWith(",") || strs.endsWith(".") || strs.endsWith("-") || strs.startsWith("\"")){
+			strs = strs.substring(0,strs.length()-1);
+			checkString(strs);
+		}else{
+			
+		}
+		return strs;
+	}
+}
